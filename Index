@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="royal">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Realm of Lavine | Royal & Futuristic Experience</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-deep: #07040d;
+            --bg-surface: rgba(20, 13, 35, 0.65);
+            --bg-glass: rgba(255, 255, 255, 0.03);
+            --border-glass: rgba(212, 175, 55, 0.25);
+            --accent-gold: #d4af37;
+            --accent-gold-glow: #f9d976;
+            --accent-rose: #ff2a7a;
+            --accent-purple: #9b51e0;
+            --text-main: #f3eefc;
+            --text-muted: #a39bb5;
+            --glow-gold: 0 0 25px rgba(212, 175, 55, 0.4);
+            --glow-rose: 0 0 25px rgba(255, 42, 122, 0.5);
+            --font-title: 'Cinzel', serif;
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        [data-theme="cyber-rose"] {
+            --bg-deep: #0c0209;
+            --bg-surface: rgba(35, 10, 25, 0.65);
+            --border-glass: rgba(255, 42, 122, 0.35);
+            --accent-gold: #ff2a7a;
+            --accent-rose: #e056fd;
+            --glow-gold: 0 0 25px rgba(255, 42, 122, 0.5);
+        }
+
+        [data-theme="midnight-emerald"] {
+            --bg-deep: #020c08;
+            --bg-surface: rgba(8, 30, 22, 0.65);
+            --border-glass: rgba(46, 204, 113, 0.35);
+            --accent-gold: #2ecc71;
+            --accent-rose: #f1c40f;
+            --glow-gold: 0 0 25px rgba(46, 204, 113, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Background Particle Canvas */
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Typography & Utility */
+        h1, h2, h3, h4, .royal-font {
+            font-family: var(--font-title);
+            letter-spacing: 1px;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent-gold-glow) 50%, var(--accent-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: var(--glow-gold);
+        }
+
+        .rose-gradient-text {
+            background: linear-gradient(135deg, #ffffff 0%, #ff82b2 50%, var(--accent-rose) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .glass-panel {
+            background: var(--bg-surface);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .glass-panel:hover {
+            border-color: var(--accent-gold);
+            box-shadow: var(--glow-gold);
+        }
+
+        /* Buttons & Interactive Elements */
+        .btn-royal {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(255, 42, 122, 0.15) 100%);
+            border: 1px solid var(--accent-gold);
+            color: var(--text-main);
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+            text-decoration: none;
+        }
+
+        .btn-royal::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-royal:hover::before {
+            left: 100%;
+        }
+
+        .btn-royal:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: var(--glow-gold);
+            border-color: #fff;
+            background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-rose) 100%);
+            color: #000;
+        }
+
+        .btn-royal:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        /* Header Navigation */
+        header {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1200px;
+            z-index: 1000;
+            padding: 12px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .logo i {
+            color: var(--accent-gold);
+            font-size: 1.5rem;
+            filter: drop-shadow(var(--glow-gold));
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .theme-pill {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glass);
+            padding: 6px 12px;
+            border-radius: 30px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .theme-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .theme-dot:hover {
+            transform: scale(1.3);
+        }
+
+        /* Main Container */
+        main {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 140px 20px 60px 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            position: relative;
+        }
+
+        .crown-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--accent-gold);
+            padding: 8px 20px;
+            border-radius: 30px;
+            color: var(--accent-gold);
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+            animation: pulseGlow 3s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 5px rgba(212, 175, 55, 0.2); }
+            100% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.6); }
+        }
+
+        .hero h1 {
+            font-size: 3.8rem;
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 680px;
+            margin: 0 auto 35px auto;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* Mood Selector Section */
+        .mood-section {
+            margin: 60px 0;
+            text-align: center;
+        }
+
+        .mood-grid {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .mood-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-glass);
+            color: var(--text-main);
+            padding: 12px 22px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+        }
+
+        .mood-btn:hover {
+            background: rgba(212, 175, 55, 0.15);
+            border-color: var(--accent-gold);
+            transform: translateY(-3px);
+        }
+
+        .mood-response {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed var(--accent-gold);
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-style: italic;
+            color: var(--accent-gold-glow);
+            transition: all 0.3s;
+        }
+
+        /* Interactive Command Center Grid */
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .command-center {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-bottom: 80px;
+        }
+
+        .cmd-card {
+            padding: 30px 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cmd-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--accent-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--accent-gold);
+            box-shadow: var(--glow-gold);
+        }
+
+        .cmd-card h3 {
+            font-size: 1.15rem;
+            color: var(--text-main);
+        }
+
+        .cmd-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* Royal Vouchers Grid */
+        .coupons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 80px;
+        }
+
+        .coupon-card {
+            padding: 25px;
+            position: relative;
+            background: linear-gradient(145deg, rgba(25, 15, 40, 0.8), rgba(10, 5, 20, 0.8));
+            border: 1px solid var(--accent-gold);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .coupon-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 0.7rem;
+            background: var(--accent-rose);
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .coupon-card.redeemed {
+            opacity: 0.5;
+            filter: grayscale(0.8);
+        }
+
+        .coupon-card.redeemed .btn-royal {
+            pointer-events: none;
+            background: #444;
+            border-color: #666;
+            color: #888;
+        }
+
+        /* Love Letter Container */
+        .letter-container {
+            max-width: 800px;
+            margin: 0 auto 80px auto;
+            padding: 45px;
+            position: relative;
+            background: rgba(15, 8, 28, 0.85);
+            border: 1px solid var(--accent-gold);
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+        }
+
+        .letter-container::before {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            border: 1px dashed rgba(212, 175, 55, 0.3);
+            pointer-events: none;
+        }
+
+        .letter-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #e2d9f3;
+            min-height: 200px;
+            white-space: pre-line;
+        }
+
+        /* Timeline Section */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto 80px auto;
+            padding-left: 30px;
+            border-left: 2px solid var(--accent-gold);
+        }
+
+        .timeline-item {
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -37px;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-gold);
+            box-shadow: var(--glow-gold);
+        }
+
+        .timeline-date {
+            font-size: 0.85rem;
+            color: var(--accent-rose);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        /* Dynamic Popups / Modals */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-card {
+            max-width: 500px;
+            width: 90%;
+            padding: 40px;
+            text-align: center;
+            transform: scale(0.8);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .modal-overlay.active .modal-card {
+            transform: scale(1);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-modal:hover {
+            color: var(--accent-rose);
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            background: var(--bg-surface);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--accent-gold);
+            color: var(--text-main);
+            padding: 14px 24px;
+            border-radius: 12px;
+            box-shadow: var(--glow-gold);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideIn 0.3s ease forwards;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid var(--border-glass);
+            position: relative;
+            z-index: 10;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            header { padding: 10px 15px; }
+            .nav-controls span { display: none; }
+            .letter-container { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Particle Canvas -->
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- Header Navigation -->
+    <header class="glass-panel">
+        <div class="logo">
+            <i class="fa-solid fa-crown"></i>
+            <span class="gold-gradient-text royal-font">Lavine's Realm</span>
+        </div>
+        <div class="nav-controls">
+            <div class="theme-pill">
+                <div class="theme-dot" style="background: #d4af37;" onclick="setTheme('royal')" title="Imperial Gold"></div>
+                <div class="theme-dot" style="background: #ff2a7a;" onclick="setTheme('cyber-rose')" title="Cyber Rose"></div>
+                <div class="theme-dot" style="background: #2ecc71;" onclick="setTheme('midnight-emerald')" title="Emerald Empress"></div>
+            </div>
+            <button class="btn-royal" style="padding: 8px 16px; font-size: 0.8rem;" onclick="toggleAudio()">
+                <i class="fa-solid fa-music" id="audioIcon"></i>
+                <span id="audioText">Ambient Music</span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="crown-badge">
+                <i class="fa-solid fa-gem"></i> Designed Exclusively For Her Majesty
+            </div>
+            <h1 class="gold-gradient-text">To The Queen Who Rules My Universe</h1>
+            <p>Welcome to your personal digital empire, Lavine. A realm crafted with futuristic interactive elegance, infinite love, and regal privilege.</p>
+            <div class="hero-buttons">
+                <a href="#commandCenter" class="btn-royal">
+                    <i class="fa-solid fa-sliders"></i> Open Command Center
+                </a>
+                <button class="btn-royal" onclick="triggerTypewriter()">
+                    <i class="fa-solid fa-scroll"></i> Read Holographic Decree
+                </button>
+            </div>
+        </section>
+
+        <!-- Mood Deck Section -->
+        <section class="mood-section">
+            <h2 class="gold-gradient-text">How Is Her Royal Highness Feeling?</h2>
+            <p style="color: var(--text-muted);">Select your current mood to recalibrate the realm's atmosphere:</p>
+            <div class="mood-grid">
+                <button class="mood-btn" onclick="respondMood('happy')">
+                    <i class="fa-solid fa-face-smile-beam" style="color:#f1c40f;"></i> Radiant & Happy
+                </button>
+                <button class="mood-btn" onclick="respondMood('tired')">
+                    <i class="fa-solid fa-moon" style="color:#9b51e0;"></i> Tired & Sleepy
+                </button>
+                <button class="mood-btn" onclick="respondMood('stressed')">
+                    <i class="fa-solid fa-cloud-rain" style="color:#3498db;"></i> Stressed / Overwhelmed
+                </button>
+                <button class="mood-btn" onclick="respondMood('romantic')">
+                    <i class="fa-solid fa-heart" style="color:#ff2a7a;"></i> Extra Loving & Romantic
+                </button>
+            </div>
+            <div class="mood-response glass-panel" id="moodResponse">
+                "Select a mood button above, My Queen..."
+            </div>
+        </section>
+
+        <!-- Interactive Command Center (Buttons Hub) -->
+        <section id="commandCenter" style="margin-top: 80px;">
+            <div class="section-title">
+                <h2 class="gold-gradient-text">Interactive Command Hub</h2>
+                <p style="color: var(--text-muted);">Your personal suite of interactive privileges and romantic controls.</p>
+            </div>
+
+            <div class="command-center">
+                <!-- Button 1 -->
+                <div class="cmd-card glass-panel">
+                    <div class="cmd-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                    <h3>Send Virtual Hug</h3>
+                    <p>Fires a full-screen holographic stream of glowing hearts directly to you.</p>
+                    <button class="btn-royal" onclick="triggerHeartBurst()">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Deploy Hug
+                    </button>
+                </div>
+
+                <!-- Button 2 -->
+                <div class="cmd-card glass-panel">
+                    <div class="cmd-icon"><i class="fa-solid fa-lightbulb"></i></div>
+                    <h3>100 Reasons Generator</h3>
+                    <p>Generates a dynamic, secret reason why you are completely irreplaceable.</p>
+                    <button class="btn-royal" onclick="showLoveReason()">
+                        <i class="fa-solid fa-shuffle"></i> Reveal Reason
+                    </button>
+                </div>
+
+                <!-- Button 3 -->
+                <div class="cmd-card glass-panel">
+                    <div class="cmd-icon"><i class="fa-solid fa-dna"></i></div>
+                    <h3>Soulmate Compatibility</h3>
+                    <p>Run a real-time futuristic quantum match diagnostic algorithm.</p>
+                    <button class="btn-royal" onclick="runScanner()">
+                        <i class="fa-solid fa-microchip"></i> Run Diagnostic
+                    </button>
+                </div>
+
+                <!-- Button 4 -->
+                <div class="cmd-card glass-panel">
+                    <div class="cmd-icon"><i class="fa-solid fa-utensils"></i></div>
+                    <h3>Date Night Picker</h3>
+                    <p>Can't decide what we should do? Let the royal spinner choose our date!</p>
+                    <button class="btn-royal" onclick="spinDateIdea()">
+                        <i class="fa-solid fa-compass"></i> Spin Date Idea
+                    </button>
+                </div>
+
+                <!-- Button 5 -->
+                <div class="cmd-card glass-panel">
+                    <div class="cmd-icon"><i class="fa-solid fa-box-open"></i></div>
+                    <h3>Mystery Gift Box</h3>
+                    <p>Unlocks a surprise royal compliment or privilege card.</p>
+                    <button class="btn-royal" onclick="openMysteryBox()">
+                        <i class="fa-solid fa-gift"></i> Unwrap Gift
+                    </button>
+                </div>
+
+                <!-- Button 6 -->
+                <div class="cmd-card glass-panel">
+                    <div class="cmd-icon"><i class="fa-solid fa-bell"></i></div>
+                    <h3>Instant Alert Signal</h3>
+                    <p>Sends an instant reminder alert that you are deeply loved right now.</p>
+                    <button class="btn-royal" onclick="sendSignal()">
+                        <i class="fa-solid fa-paper-plane"></i> Transmit Love
+                    </button>
+                </div>
+
+                <!-- Button 7 -->
+                <div class="cmd-card glass-panel">
+                    <div class="cmd-icon"><i class="fa-solid fa-shield-cat"></i></div>
+                    <h3>Treat Like Royalty</h3>
+                    <p>Instantly claims complete royal immunity & pampering priority.</p>
+                    <button class="btn-royal" onclick="claimPampering()">
+                        <i class="fa-solid fa-crown"></i> Claim Priority
+                    </button>
+                </div>
+
+                <!-- Button 8 -->
+                <div class="cmd-card glass-panel">
+                    <div class="cmd-icon"><i class="fa-solid fa-skull-crossbones"></i></div>
+                    <h3>Do NOT Press</h3>
+                    <p>Classified forbidden button. Proceed at your own romantic risk!</p>
+                    <button class="btn-royal" style="border-color: #ff2a7a;" onclick="forbiddenButton()">
+                        <i class="fa-solid fa-triangle-exclamation"></i> Press Forbidden
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Royal Vouchers & Coupons -->
+        <section style="margin-bottom: 80px;">
+            <div class="section-title">
+                <h2 class="gold-gradient-text">Her Majesty's Redeemable Vouchers</h2>
+                <p style="color: var(--text-muted);">Redeem these coupons anytime in real life. Your status is saved automatically!</p>
+            </div>
+
+            <div class="coupons-grid">
+                <div class="coupon-card glass-panel" id="coupon-1">
+                    <span class="coupon-badge">VIP Pass</span>
+                    <h3 class="royal-font gold-gradient-text"><i class="fa-solid fa-spa"></i> 1x Full Back Massage</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Entitles Lavine to an unhurried, relaxing full massage session with no time limits.</p>
+                    <button class="btn-royal" onclick="redeemCoupon('coupon-1', 'Full Back Massage')">Redeem Pass</button>
+                </div>
+
+                <div class="coupon-card glass-panel" id="coupon-2">
+                    <span class="coupon-badge">Unlimited</span>
+                    <h3 class="royal-font gold-gradient-text"><i class="fa-solid fa-gavel"></i> 1x Win Any Argument</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Instantly settles any minor debate or disagreement in your favor. Zero questions asked!</p>
+                    <button class="btn-royal" onclick="redeemCoupon('coupon-2', 'Win Any Argument')">Redeem Pass</button>
+                </div>
+
+                <div class="coupon-card glass-panel" id="coupon-3">
+                    <span class="coupon-badge">Late Night</span>
+                    <h3 class="royal-font gold-gradient-text"><i class="fa-solid fa-ice-cream"></i> Late Night Snack Run</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Command your favorite treats, ice cream, or midnight cravings delivered straight to you.</p>
+                    <button class="btn-royal" onclick="redeemCoupon('coupon-3', 'Late Night Snack Run')">Redeem Pass</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Love Letter Decree -->
+        <section style="margin-bottom: 80px;">
+            <div class="section-title">
+                <h2 class="gold-gradient-text">The Holographic Love Decree</h2>
+            </div>
+            <div class="letter-container glass-panel">
+                <div class="letter-text" id="typewriterText">
+                    Click "Read Holographic Decree" above to stream your official royal love letter...
+                </div>
+            </div>
+        </section>
+
+        <!-- Milestones Galaxy -->
+        <section>
+            <div class="section-title">
+                <h2 class="gold-gradient-text">Milestones in Our Galaxy</h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">CHAPTER I</div>
+                    <h3 class="royal-font">The Stars Aligned</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">The unforgettable moment you entered my world and transformed everything into vibrant color.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">CHAPTER II</div>
+                    <h3 class="royal-font">Building The Empire</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Every laugh shared, late-night conversation, and memory collected side by side.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">CHAPTER III</div>
+                    <h3 class="royal-font">An Eternal Future</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Looking ahead to endless dates, adventures, success, and continuous happiness together.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p class="royal-font" style="color: var(--accent-gold); margin-bottom: 10px;">
+            <i class="fa-solid fa-heart"></i> Crafted Exclusively For Lavine
+        </p>
+        <p>Forever & Always — Designed with love, technology, and devotion.</p>
+    </footer>
+
+    <!-- Universal Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-card glass-panel">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Logic & Audio Engine Scripts -->
+    <script>
+        /* ----------------------------------------------------
+           1. CANVAS PARTICLE SYSTEM (STARS & CURSOR TRAIL)
+        ---------------------------------------------------- */
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let cursorParticles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Star {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2;
+                this.speedX = (Math.random() - 0.5) * 0.3;
+                this.speedY = (Math.random() - 0.5) * 0.3;
+                this.opacity = Math.random();
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+            draw() {
+                ctx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 120; i++) {
+            particles.push(new Star());
+        }
+
+        // Mouse Particle Trail
+        window.addEventListener('mousemove', (e) => {
+            for(let i=0; i<2; i++){
+                cursorParticles.push({
+                    x: e.clientX,
+                    y: e.clientY,
+                    size: Math.random() * 4 + 1,
+                    color: Math.random() > 0.5 ? '#d4af37' : '#ff2a7a',
+                    alpha: 1,
+                    vx: (Math.random() - 0.5) * 1.5,
+                    vy: (Math.random() - 0.5) * 1.5
+                });
+            }
+        });
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Render background stars
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            // Render interactive cursor trail
+            for (let i = 0; i < cursorParticles.length; i++) {
+                let cp = cursorParticles[i];
+                cp.x += cp.vx;
+                cp.y += cp.vy;
+                cp.alpha -= 0.02;
+                ctx.fillStyle = cp.color;
+                ctx.globalAlpha = Math.max(0, cp.alpha);
+                ctx.beginPath();
+                ctx.arc(cp.x, cp.y, cp.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.globalAlpha = 1;
+
+                if (cp.alpha <= 0) {
+                    cursorParticles.splice(i, 1);
+                    i--;
+                }
+            }
+
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
+
+        /* ----------------------------------------------------
+           2. THEME ENGINE & TOASTS
+        ---------------------------------------------------- */
+        function setTheme(themeName) {
+            document.documentElement.setAttribute('data-theme', themeName);
+            showToast(`Atmosphere recalibrated to ${themeName.replace('-', ' ').toUpperCase()}`);
+        }
+
+        function showToast(message, icon = 'fa-sparkles') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `<i class="fa-solid ${icon}" style="color: var(--accent-gold);"></i> <span>${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        /* ----------------------------------------------------
+           3. MOOD RESPONDER DATA
+        ---------------------------------------------------- */
+        const moodResponses = {
+            happy: "✨ 'Your smile brightens my whole world! Keep shining, My Queen. Let's make today extra special!'",
+            tired: "🌙 'Rest easy, Lavine. You deserve all the peace in the world. Drink some water and relax—I've got everything covered.'",
+            stressed: "💖 'Take a deep breath, gorgeous. Whatever is weighing on you is temporary. You are strong, capable, and deeply loved.'",
+            romantic: "🌹 'My heart skips a beat for you every single day! You are my favorite person in every universe.'"
+        };
+
+        function respondMood(mood) {
+            const el = document.getElementById('moodResponse');
+            el.style.opacity = 0;
+            setTimeout(() => {
+                el.innerHTML = moodResponses[mood];
+                el.style.opacity = 1;
+            }, 200);
+        }
+
+        /* ----------------------------------------------------
+           4. COMMAND CENTER FUNCTIONS & MODALS
+        ---------------------------------------------------- */
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalContent = document.getElementById('modalContent');
+
+        function openModal(html) {
+            modalContent.innerHTML = html;
+            modalOverlay.classList.add('active');
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+        }
+
+        // Feature 1: Heart Burst Fireworks
+        function triggerHeartBurst() {
+            for(let i=0; i<30; i++) {
+                setTimeout(() => {
+                    cursorParticles.push({
+                        x: window.innerWidth / 2 + (Math.random() - 0.5) * 400,
+                        y: window.innerHeight / 2 + (Math.random() - 0.5) * 400,
+                        size: Math.random() * 8 + 4,
+                        color: '#ff2a7a',
+                        alpha: 1,
+                        vx: (Math.random() - 0.5) * 4,
+                        vy: (Math.random() - 0.5) * 4
+                    });
+                }, i * 30);
+            }
+            showToast("Holographic virtual hug transmitted!", "fa-heart");
+        }
+
+        // Feature 2: Reasons Why I Love You
+        const loveReasons = [
+            "Your beautiful, radiant smile that can instantly brighten up my darkest days.",
+            "The gentle, caring way you treat everyone around you with so much warmth.",
+            "Your intelligence, ambition, and the grace with which you handle everything.",
+            "The way your eyes light up whenever you are truly happy or excited.",
+            "How effortlessly you make my world feel complete, safe, and exciting.",
+            "Your adorable laughter—it is genuinely my favorite sound in the entire world."
+        ];
+
+        function showLoveReason() {
+            const randomReason = loveReasons[Math.floor(Math.random() * loveReasons.length)];
+            openModal(`
+                <i class="fa-solid fa-quote-left" style="font-size: 2.5rem; color: var(--accent-gold); margin-bottom: 15px;"></i>
+                <h3 class="royal-font gold-gradient-text" style="margin-bottom: 15px;">Reason Why You're Loved</h3>
+                <p style="font-size: 1.1rem; line-height: 1.6; color: #e2d9f3;">"${randomReason}"</p>
+                <button class="btn-royal" style="margin-top: 25px;" onclick="closeModal()">Close With Love</button>
+            `);
+        }
+
+        // Feature 3: Quantum Compatibility Diagnostic
+        function runScanner() {
+            openModal(`
+                <h3 class="royal-font gold-gradient-text" style="margin-bottom: 20px;">Quantum Compatibility Diagnostic</h3>
+                <div style="background: rgba(255,255,255,0.05); height: 12px; border-radius: 10px; overflow: hidden; margin-bottom: 20px;">
+                    <div id="progressBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, var(--accent-gold), var(--accent-rose)); transition: width 2s ease;"></div>
+                </div>
+                <p id="scanStatus" style="font-size: 0.9rem; color: var(--text-muted);">Analyzing emotional wavelengths & soul harmony...</p>
+            `);
+
+            setTimeout(() => {
+                document.getElementById('progressBar').style.width = '100%';
+            }, 100);
+
+            setTimeout(() => {
+                document.getElementById('scanStatus').innerHTML = `<strong style="color: var(--accent-gold-glow); font-size: 1.2rem;">RESULT: 1000% INFINITE MATCH</strong><br>You two are cosmically bound across all dimensions!`;
+            }, 2100);
+        }
+
+        // Feature 4: Date Idea Spinner
+        const dateIdeas = [
+            "🕯️ Romantic Candlelight Dinner & Soft Music",
+            "🍦 Late Night Ice Cream & City Stroll",
+            "🍿 Cozy Movie Marathon with Endless Snacks",
+            "🌅 Sunrise Picnic & Fresh Coffee Session",
+            "🎨 Fun DIY Painting & Pampering Evening"
+        ];
+
+        function spinDateIdea() {
+            const idea = dateIdeas[Math.floor(Math.random() * dateIdeas.length)];
+            openModal(`
+                <i class="fa-solid fa-compass" style="font-size: 2.5rem; color: var(--accent-rose); margin-bottom: 15px;"></i>
+                <h3 class="royal-font gold-gradient-text" style="margin-bottom: 15px;">Royal Date Directive</h3>
+                <p style="font-size: 1.2rem; font-weight: 600; color: var(--accent-gold-glow); margin-bottom: 20px;">${idea}</p>
+                <button class="btn-royal" onclick="closeModal()">Accept Date Idea</button>
+            `);
+        }
+
+        // Feature 5: Mystery Gift Box
+        function openMysteryBox() {
+            openModal(`
+                <i class="fa-solid fa-gift" style="font-size: 3rem; color: var(--accent-gold); margin-bottom: 15px; animation: bounce 1s infinite alternate;"></i>
+                <h3 class="royal-font gold-gradient-text" style="margin-bottom: 15px;">You Unlocked A Privilege!</h3>
+                <p style="font-size: 1.05rem; color: #e2d9f3; margin-bottom: 20px;">
+                    "Her Majesty has unlocked 1x Unlimited Warm Hugs & Endless Compliments Voucher, redeemable indefinitely!"
+                </p>
+                <button class="btn-royal" onclick="closeModal()">Claim Gift</button>
+            `);
+        }
+
+        // Feature 6: Send Instant Signal
+        function sendSignal() {
+            showToast("Signal sent to Samuel: 'Lavine is thinking of you!'", "fa-paper-plane");
+        }
+
+        // Feature 7: Claim Pampering Priority
+        function claimPampering() {
+            showToast("👑 Royal Privilege Activated: Lavine gets 100% royal priority today!", "fa-crown");
+        }
+
+        // Feature 8: Forbidden Button
+        function forbiddenButton() {
+            triggerHeartBurst();
+            openModal(`
+                <i class="fa-solid fa-heart-crack" style="font-size: 2.5rem; color: var(--accent-rose); margin-bottom: 15px;"></i>
+                <h3 class="royal-font rose-gradient-text" style="margin-bottom: 15px;">SYSTEM OVERLOAD!</h3>
+                <p style="font-size: 1.05rem; color: #e2d9f3; margin-bottom: 20px;">
+                    You weren't supposed to press that! Now you are officially stuck being adored forever. No escape allowed!
+                </p>
+                <button class="btn-royal" onclick="closeModal()">Surrender To Love</button>
+            `);
+        }
+
+        /* ----------------------------------------------------
+           5. RECOGNIZED VOUCHERS SYSTEM (WITH LOCALSTORAGE)
+        ---------------------------------------------------- */
+        function redeemCoupon(id, title) {
+            const card = document.getElementById(id);
+            if(card) {
+                card.classList.add('redeemed');
+                localStorage.setItem(`coupon_${id}`, 'true');
+                showToast(`Voucher redeemed: ${title}!`, "fa-check-circle");
+            }
+        }
+
+        function loadCoupons() {
+            ['coupon-1', 'coupon-2', 'coupon-3'].forEach(id => {
+                if(localStorage.getItem(`coupon_${id}`) === 'true') {
+                    const card = document.getElementById(id);
+                    if(card) card.classList.add('redeemed');
+                }
+            });
+        }
+        loadCoupons();
+
+        /* ----------------------------------------------------
+           6. TYPEWRITER LOVE DECREE
+        ---------------------------------------------------- */
+        const letterMessage = `To my dearest Lavine,
+
+If royalty was measured in grace, kindness, and beauty, you would rule every kingdom in existence. 
+
+This website was designed exclusively for you—to give you a small glimpse into how deeply appreciated and cherished you are every single day. 
+
+No matter where life takes us or how fast the world moves around us, my love, devotion, and admiration for you will remain constant, unwavering, and forever royal.
+
+Thank you for being my favorite person, my calm in every storm, and my greatest happiness.
+
+Forever yours,
+Your Devoted Royal Partner 👑`;
+
+        let isTyping = false;
+        function triggerTypewriter() {
+            if(isTyping) return;
+            const container = document.getElementById('typewriterText');
+            container.innerHTML = '';
+            let index = 0;
+            isTyping = true;
+
+            const timer = setInterval(() => {
+                if(index < letterMessage.length) {
+                    container.innerHTML += letterMessage.charAt(index);
+                    index++;
+                } else {
+                    clearInterval(timer);
+                    isTyping = false;
+                }
+            }, 35);
+        }
+
+        /* ----------------------------------------------------
+           7. WEB AUDIO API SYNTHESIZER (AMBIENT SOUNDTRACK)
+        ---------------------------------------------------- */
+        let audioCtx;
+        let isPlayingAudio = false;
+        let audioInterval;
+
+        function toggleAudio() {
+            const audioText = document.getElementById('audioText');
+            const audioIcon = document.getElementById('audioIcon');
+
+            if(!isPlayingAudio) {
+                if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Play soft ambient pentatonic notes
+                const notes = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25]; // C, D, E, G, A, C
+                audioInterval = setInterval(() => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    const note = notes[Math.floor(Math.random() * notes.length)];
+                    
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(note, audioCtx.currentTime);
+                    
+                    gain.gain.setValueAtTime(0.01, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.08, audioCtx.currentTime + 1);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 4);
+
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 4.1);
+                }, 1800);
+
+                isPlayingAudio = true;
+                audioText.innerText = 'Pause Sound';
+                audioIcon.className = 'fa-solid fa-volume-high';
+                showToast("Ambient relaxing soundtrack started...", "fa-music");
+            } else {
+                clearInterval(audioInterval);
+                isPlayingAudio = false;
+                audioText.innerText = 'Ambient Music';
+                audioIcon.className = 'fa-solid fa-music';
+                showToast("Audio paused.", "fa-volume-xmark");
+            }
+        }
+    </script>
+</body>
+</html>
